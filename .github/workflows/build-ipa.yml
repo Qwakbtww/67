@@ -11,6 +11,8 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
+    env:
+      HAS_SIGNING_SECRETS: ${{ secrets.SIGNING_P12_BASE64 != '' && secrets.SIGNING_PROFILE_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -52,6 +54,74 @@ jobs:
           test -f Payload/LucidDash.app/_CodeSignature/CodeResources
           zip -qry LucidDash-unsigned.ipa Payload
           ls -lh LucidDash-unsigned.ipa
+
+      - name: Sign with your certificate (optional)
+        # Runs only when the repository has these secrets:
+        #   SIGNING_P12_BASE64        base64 of your .p12 certificate
+        #   SIGNING_P12_PASSWORD      its password (can be empty)
+        #   SIGNING_PROFILE_BASE64    base64 of your .mobileprovision
+        env:
+          P12_BASE64: ${{ secrets.SIGNING_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.SIGNING_P12_PASSWORD }}
+          PROFILE_BASE64: ${{ secrets.SIGNING_PROFILE_BASE64 }}
+        if: env.HAS_SIGNING_SECRETS == 'true'
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/sign"
+          mkdir -p "$WORK"
+          echo "$P12_BASE64" | base64 --decode > "$WORK/cert.p12"
+          echo "$PROFILE_BASE64" | base64 --decode > "$WORK/profile.mobileprovision"
+
+          KEYCHAIN="$WORK/signing.keychain-db"
+          security create-keychain -p ci "$KEYCHAIN"
+          security set-keychain-settings -lut 3600 "$KEYCHAIN"
+          security unlock-keychain -p ci "$KEYCHAIN"
+          security import "$WORK/cert.p12" -k "$KEYCHAIN" -P "$P12_PASSWORD" -A -t cert -f pkcs12
+          security set-key-partition-list -S apple-tool:,apple: -s -k ci "$KEYCHAIN" >/dev/null
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+
+          IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN" | awk 'NR==1{print $2}')
+          test -n "$IDENTITY" || { echo "::error::No signing identity found in the .p12"; exit 1; }
+          security find-identity -v -p codesigning "$KEYCHAIN"
+
+          security cms -D -i "$WORK/profile.mobileprovision" > "$WORK/profile.plist"
+          /usr/libexec/PlistBuddy -x -c "Print :Entitlements" "$WORK/profile.plist" > "$WORK/entitlements.plist"
+          TEAM=$(/usr/libexec/PlistBuddy -c "Print :TeamIdentifier:0" "$WORK/profile.plist")
+          APPID=$(/usr/libexec/PlistBuddy -c "Print :Entitlements:application-identifier" "$WORK/profile.plist")
+          echo "Profile: $(/usr/libexec/PlistBuddy -c 'Print :Name' "$WORK/profile.plist"), team $TEAM, app id $APPID, expires $(/usr/libexec/PlistBuddy -c 'Print :ExpirationDate' "$WORK/profile.plist")"
+
+          rm -rf SignedPayload && mkdir SignedPayload
+          cp -R Payload/LucidDash.app SignedPayload/
+          APP=SignedPayload/LucidDash.app
+          BUNDLE_ID="${APPID#"$TEAM".}"
+          if [[ "$BUNDLE_ID" == *"*"* ]]; then
+            # Wildcard profile: keep our bundle ID and spell it out in the entitlements.
+            BUNDLE_ID=$(/usr/libexec/PlistBuddy -c "Print :CFBundleIdentifier" "$APP/Info.plist")
+          else
+            /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier $BUNDLE_ID" "$APP/Info.plist"
+          fi
+          /usr/libexec/PlistBuddy -c "Set :application-identifier $TEAM.$BUNDLE_ID" "$WORK/entitlements.plist"
+          echo "Signing as bundle ID $BUNDLE_ID"
+
+          cp "$WORK/profile.mobileprovision" "$APP/embedded.mobileprovision"
+          codesign --force --sign "$IDENTITY" --keychain "$KEYCHAIN" \
+            --entitlements "$WORK/entitlements.plist" --generate-entitlement-der --timestamp=none "$APP"
+          codesign --verify --strict --verbose=2 "$APP"
+          codesign -d --entitlements - "$APP"
+
+          rm -rf Payload-signed && mkdir Payload-signed && mv SignedPayload Payload-signed/Payload
+          (cd Payload-signed && zip -qry ../LucidDash-signed.ipa Payload)
+          ls -lh LucidDash-signed.ipa
+          security delete-keychain "$KEYCHAIN"
+          rm -rf "$WORK"
+
+      - name: Upload signed IPA (private, 7 days)
+        if: hashFiles('LucidDash-signed.ipa') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: LucidDash-signed-ipa
+          path: LucidDash-signed.ipa
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
