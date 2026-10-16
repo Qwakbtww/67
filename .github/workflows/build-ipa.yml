@@ -41,6 +41,15 @@ jobs:
         run: |
           mkdir -p Payload
           cp -R build/Build/Products/Release-iphoneos/LucidDash.app Payload/
+          # Ad-hoc sign so the binary carries an LC_CODE_SIGNATURE slot and
+          # _CodeSignature/CodeResources. On-device re-signers (ESign, Scarlet,
+          # Feather, zsign) replace this signature but need the slot to exist;
+          # without it the install fails with "integrity could not be verified".
+          xattr -cr Payload/LucidDash.app
+          codesign --force --sign - --timestamp=none --generate-entitlement-der Payload/LucidDash.app
+          codesign --verify --verbose=2 Payload/LucidDash.app
+          otool -l Payload/LucidDash.app/LucidDash | grep -q LC_CODE_SIGNATURE
+          test -f Payload/LucidDash.app/_CodeSignature/CodeResources
           zip -qry LucidDash-unsigned.ipa Payload
           ls -lh LucidDash-unsigned.ipa
 
@@ -56,8 +65,8 @@ jobs:
           TAG="build-${GITHUB_RUN_NUMBER}"
           gh release create "$TAG" LucidDash-unsigned.ipa \
             --target "$GITHUB_SHA" \
-            --title "LucidDash build ${GITHUB_RUN_NUMBER} (unsigned)" \
-            --notes "Unsigned IPA built from ${GITHUB_SHA::7} on ${GITHUB_REF_NAME}. Sign it with your own certificate before installing." \
+            --title "LucidDash build ${GITHUB_RUN_NUMBER} (ready to sign)" \
+            --notes "Ad-hoc signed IPA built from ${GITHUB_SHA::7} on ${GITHUB_REF_NAME}. Sign it with your own certificate before installing." \
             --prerelease
 
       - name: Upload build log on failure
