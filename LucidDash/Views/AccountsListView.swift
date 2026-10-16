@@ -121,7 +121,7 @@ private struct AccountRow: View {
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(s.todayPnL.pnlColor)
                 Spacer()
-                Text("Buffer \(s.drawdownBuffer.currency)")
+                Text("Buffer \((account.reported?.buffer ?? s.drawdownBuffer).currency)")
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(s.status == .active || s.status == .passed ? Color.secondary : s.status.color)
             }

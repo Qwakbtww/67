@@ -103,6 +103,25 @@ public struct AccountRules: Codable, Hashable, Sendable {
     }
 }
 
+/// Figures read from Lucid's own dashboard, which is the authoritative source.
+public struct ReportedFigures: Codable, Hashable, Sendable {
+    public var balance: Double?
+    public var drawdownFloor: Double?
+    public var capturedAt: Date
+
+    public init(balance: Double? = nil, drawdownFloor: Double? = nil, capturedAt: Date = Date()) {
+        self.balance = balance
+        self.drawdownFloor = drawdownFloor
+        self.capturedAt = capturedAt
+    }
+
+    /// Distance from the balance to the floor, when both are known.
+    public var buffer: Double? {
+        guard let balance, let drawdownFloor else { return nil }
+        return balance - drawdownFloor
+    }
+}
+
 public struct TradingAccount: Identifiable, Codable, Hashable, Sendable {
     public var id: UUID
     public var name: String
@@ -112,6 +131,8 @@ public struct TradingAccount: Identifiable, Codable, Hashable, Sendable {
     public var rules: AccountRules
     public var trades: [Trade]
     public var createdAt: Date
+    /// Latest numbers captured from Lucid's dashboard, if any.
+    public var reported: ReportedFigures?
 
     public init(
         id: UUID = UUID(),

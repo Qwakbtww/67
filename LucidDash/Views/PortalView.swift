@@ -1,97 +1,148 @@
 import SwiftUI
-import WebKit
+import LucidCore
 
-/// Shows Lucid's own web dashboard. Login cookies persist in the app's default
-/// website data store, so you normally only sign in once.
+/// Lucid's own web dashboard. Login cookies persist, and "Read numbers" pulls the
+/// balance / drawdown figures off the page so they can be saved to an account.
 struct PortalView: View {
     @EnvironmentObject private var settings: AppSettings
     @StateObject private var model = WebViewModel()
+    @State private var figures: [PageFigure]?
+    @State private var nothingFound = false
+
+    var body: some View {
+        BrowserScreen(fallbackTitle: "Lucid", homeURL: settings.resolvedPortalURL, model: model) {
+            Button {
+                model.pageText { text in
+                    let found = PageFigureParser.parse(text ?? "")
+                    if found.isEmpty { nothingFound = true } else { figures = found }
+                }
+            } label: {
+                Label("Read numbers", systemImage: "text.viewfinder")
+            }
+        }
+        .sheet(isPresented: Binding(isPresenting: $figures)) {
+            CaptureFiguresView(figures: figures ?? [])
+        }
+        .alert("No numbers found", isPresented: $nothingFound) {
+            Button("OK") {}
+        } message: {
+            Text("Open the page that shows your account balance and drawdown, then tap Read numbers again.")
+        }
+    }
+}
+
+/// Lets the user assign figures read from Lucid's page to one of their accounts.
+struct CaptureFiguresView: View {
+    let figures: [PageFigure]
+
+    @EnvironmentObject private var store: AccountStore
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var accountID: UUID?
+    @State private var balanceIndex: Int?
+    @State private var floorIndex: Int?
+    @State private var remainingIndex: Int?
 
     var body: some View {
         NavigationStack {
-            WebView(model: model, url: settings.resolvedPortalURL)
-                .ignoresSafeArea(edges: .bottom)
-                .overlay(alignment: .top) {
-                    if model.isLoading {
-                        ProgressView(value: model.progress)
-                            .progressViewStyle(.linear)
+            Form {
+                if store.accounts.isEmpty {
+                    Section {
+                        Text("Add an account on the Accounts tab first, then come back and read the numbers again.")
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Section("Save to account") {
+                        Picker("Account", selection: $accountID) {
+                            ForEach(store.accounts) { account in
+                                Text(account.name).tag(Optional(account.id))
+                            }
+                        }
+                    }
+                    Section {
+                        figurePicker("Balance", selection: $balanceIndex)
+                        figurePicker("Drawdown floor", selection: $floorIndex)
+                        if floorIndex == nil {
+                            figurePicker("…or drawdown left", selection: $remainingIndex)
+                        }
+                    } header: {
+                        Text("Lucid's numbers")
+                    } footer: {
+                        Text("The floor is the balance your account must stay above. If the page only shows how much drawdown is left, pick that and the floor is worked out from the balance.")
+                    }
+                    if let preview {
+                        Section("Will save") {
+                            if let b = preview.balance { LabeledContent("Balance", value: b.currency) }
+                            if let f = preview.drawdownFloor { LabeledContent("Floor", value: f.currency) }
+                            if let buffer = preview.buffer { LabeledContent("Room to floor", value: buffer.currency) }
+                        }
                     }
                 }
-                .navigationTitle(model.title.isEmpty ? "Lucid Portal" : model.title)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarLeading) {
-                        Button { model.webView?.goBack() } label: { Image(systemName: "chevron.backward") }
-                            .disabled(!model.canGoBack)
-                        Button { model.webView?.goForward() } label: { Image(systemName: "chevron.forward") }
-                            .disabled(!model.canGoForward)
-                    }
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        Button {
-                            model.webView?.load(URLRequest(url: settings.resolvedPortalURL))
-                        } label: { Image(systemName: "house") }
-                        Button { model.webView?.reload() } label: { Image(systemName: "arrow.clockwise") }
+                Section("Found on the page") {
+                    ForEach(figures) { figure in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(figure.label)
+                                if let hint = figure.accountHint {
+                                    Text(hint).font(.caption).foregroundStyle(.secondary)
+                                }
+                            }
+                            Spacer()
+                            Text(figure.amount.currency).monospacedDigit()
+                        }
                     }
                 }
-        }
-    }
-}
-
-@MainActor
-final class WebViewModel: ObservableObject {
-    @Published var isLoading = false
-    @Published var progress = 0.0
-    @Published var title = ""
-    @Published var canGoBack = false
-    @Published var canGoForward = false
-    weak var webView: WKWebView?
-    var loadedURL: URL?
-    private var observations: [NSKeyValueObservation] = []
-
-    func attach(_ webView: WKWebView) {
-        self.webView = webView
-        observations = [
-            webView.observe(\.isLoading) { [weak self] wv, _ in Task { @MainActor in self?.isLoading = wv.isLoading } },
-            webView.observe(\.estimatedProgress) { [weak self] wv, _ in Task { @MainActor in self?.progress = wv.estimatedProgress } },
-            webView.observe(\.title) { [weak self] wv, _ in Task { @MainActor in self?.title = wv.title ?? "" } },
-            webView.observe(\.canGoBack) { [weak self] wv, _ in Task { @MainActor in self?.canGoBack = wv.canGoBack } },
-            webView.observe(\.canGoForward) { [weak self] wv, _ in Task { @MainActor in self?.canGoForward = wv.canGoForward } },
-        ]
-    }
-}
-
-private struct WebView: UIViewRepresentable {
-    let model: WebViewModel
-    let url: URL
-
-    func makeUIView(context: Context) -> WKWebView {
-        let config = WKWebViewConfiguration()
-        config.websiteDataStore = .default()
-        let webView = WKWebView(frame: .zero, configuration: config)
-        webView.allowsBackForwardNavigationGestures = true
-        let refresh = UIRefreshControl()
-        refresh.addTarget(context.coordinator, action: #selector(Coordinator.refresh(_:)), for: .valueChanged)
-        webView.scrollView.refreshControl = refresh
-        model.attach(webView)
-        model.loadedURL = url
-        webView.load(URLRequest(url: url))
-        return webView
-    }
-
-    func updateUIView(_ webView: WKWebView, context: Context) {
-        // Reload only when the portal address is changed in Settings.
-        if model.loadedURL != url {
-            model.loadedURL = url
-            webView.load(URLRequest(url: url))
+            }
+            .navigationTitle("Lucid numbers")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        if let accountID, let preview { store.setReported(preview, for: accountID) }
+                        dismiss()
+                    }
+                    .disabled(accountID == nil || preview == nil)
+                }
+            }
+            .onAppear(perform: preselect)
+            .onChange(of: accountID) { preselectFigures() }
         }
     }
 
-    func makeCoordinator() -> Coordinator { Coordinator() }
-
-    final class Coordinator: NSObject {
-        @objc func refresh(_ sender: UIRefreshControl) {
-            (sender.superview?.superview as? WKWebView)?.reload()
-            sender.endRefreshing()
+    private var preview: ReportedFigures? {
+        let balance = balanceIndex.map { figures[$0].amount }
+        var floor = floorIndex.map { figures[$0].amount }
+        if floor == nil, let balance, let remaining = remainingIndex.map({ figures[$0].amount }) {
+            floor = balance - remaining
         }
+        guard balance != nil || floor != nil else { return nil }
+        return ReportedFigures(balance: balance, drawdownFloor: floor)
+    }
+
+    private func figurePicker(_ title: String, selection: Binding<Int?>) -> some View {
+        Picker(title, selection: selection) {
+            Text("None").tag(Int?.none)
+            ForEach(figures) { figure in
+                Text("\(figure.label) · \(figure.amount.currency)").tag(Optional(figure.index))
+            }
+        }
+    }
+
+    private func preselect() {
+        // Prefer the account whose number appears on the page.
+        let hints = Set(figures.compactMap(\.accountHint))
+        accountID = store.accounts.first { !$0.accountNumber.isEmpty && hints.contains($0.accountNumber) }?.id
+            ?? store.accounts.first?.id
+        preselectFigures()
+    }
+
+    private func preselectFigures() {
+        let number = store.accounts.first { $0.id == accountID }?.accountNumber ?? ""
+        let scoped = figures.filter { !number.isEmpty && $0.accountHint == number }
+        let pool = scoped.isEmpty ? figures : scoped
+        balanceIndex = pool.first { $0.kind == .balance }?.index
+        floorIndex = pool.first { $0.kind == .drawdownFloor }?.index
+        remainingIndex = floorIndex == nil ? pool.first { $0.kind == .drawdownRemaining }?.index : nil
     }
 }

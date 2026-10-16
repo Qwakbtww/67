@@ -27,6 +27,9 @@ struct AccountDashboardView: View {
         return ScrollView {
             VStack(spacing: 16) {
                 header(account, s)
+                if let reported = account.reported {
+                    ReportedCard(reported: reported, snapshot: s)
+                }
                 if account.trades.isEmpty {
                     noTradesCard
                 } else {
@@ -116,7 +119,7 @@ struct AccountDashboardView: View {
         VStack(spacing: 12) {
             Image(systemName: "tray.and.arrow.down").font(.largeTitle).foregroundStyle(.secondary)
             Text("No trades yet").font(.headline)
-            Text("Export your trade history (e.g. Tradovate → Reports → Performance → Download CSV) and import it here, or add trades by hand.")
+            Text("Open the Tradovate tab, log in and download your Performance report: the app imports it automatically. You can also import a CSV from Files or add trades by hand.")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -153,6 +156,53 @@ extension View {
     func card() -> some View {
         padding()
             .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+}
+
+/// Numbers read from Lucid's own dashboard, shown next to the app's calculation.
+private struct ReportedCard: View {
+    let reported: ReportedFigures
+    let snapshot: AccountSnapshot
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("From Lucid's dashboard", systemImage: "checkmark.shield")
+                    .font(.headline)
+                Spacer()
+                Text(reported.capturedAt, format: .relative(presentation: .named))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 6) {
+                GridRow {
+                    Text("").gridColumnAlignment(.leading)
+                    Text("Lucid").font(.caption).foregroundStyle(.secondary)
+                    Text("This app").font(.caption).foregroundStyle(.secondary)
+                }
+                row("Balance", reported.balance, snapshot.balance)
+                row("Floor", reported.drawdownFloor, snapshot.drawdownThreshold)
+                row("Room", reported.buffer, snapshot.drawdownBuffer)
+            }
+            if let buffer = reported.buffer, abs(buffer - snapshot.drawdownBuffer) >= 1 {
+                Text("The numbers differ. Lucid's are the official ones; import your latest trades or adjust the account rules to line them up.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Text("Update from the Lucid tab → Read numbers.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .card()
+    }
+
+    private func row(_ title: String, _ lucid: Double?, _ ours: Double) -> some View {
+        GridRow {
+            Text(title).font(.subheadline)
+            Text(lucid?.currency ?? "—").font(.subheadline.weight(.semibold).monospacedDigit())
+            Text(ours.currency).font(.subheadline.monospacedDigit()).foregroundStyle(.secondary)
+        }
     }
 }
 

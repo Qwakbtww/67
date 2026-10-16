@@ -172,3 +172,43 @@ final class TradingCalendarTests: XCTestCase {
         }
     }
 }
+
+final class PageFigureParserTests: XCTestCase {
+    func testLabelsOnSeparateAndSameLines() {
+        let text = """
+        Dashboard
+        Account LFE0501234567
+        50K Flex
+        Balance
+        $51,240.50
+        Drawdown Threshold
+        $49,100.00
+        Today's P&L: -$125.25
+        Profit Target $3,000.00
+        Account LFE0507654321
+        Balance
+        $48,800.00
+        Trades 12
+        """
+        let figures = PageFigureParser.parse(text)
+        XCTAssertEqual(figures.map(\.amount), [51_240.50, 49_100, -125.25, 3_000, 48_800])
+        XCTAssertEqual(figures[0].kind, .balance)
+        XCTAssertEqual(figures[1].kind, .drawdownFloor)
+        XCTAssertEqual(figures[2].label, "Today's P&L")
+        XCTAssertEqual(figures[3].kind, .target)
+        XCTAssertEqual(figures[0].accountHint, "LFE0501234567")
+        XCTAssertEqual(figures[4].accountHint, "LFE0507654321")
+    }
+
+    func testIgnoresPlainIntegers() {
+        XCTAssertTrue(PageFigureParser.parse("Daily trades\n12\nProfit days\n3").isEmpty)
+    }
+
+    func testOldSavedAccountsStillDecode() throws {
+        let account = TradingAccount(name: "t", rules: AccountRules(startingBalance: 50_000, maxDrawdown: 2_000))
+        var json = try JSONSerialization.jsonObject(with: JSONEncoder().encode(account)) as! [String: Any]
+        json.removeValue(forKey: "reported")
+        let decoded = try JSONDecoder().decode(TradingAccount.self, from: JSONSerialization.data(withJSONObject: json))
+        XCTAssertNil(decoded.reported)
+    }
+}

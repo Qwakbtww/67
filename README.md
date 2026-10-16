@@ -11,8 +11,9 @@ It isn't affiliated with Lucid Trading. Lucid's own dashboard is always the sour
   - profit-target progress, daily loss left and the consistency rule (best day as a share of total profit)
   - status badges: Active, At risk, Target hit, Breached
   - a balance vs. drawdown-floor chart, a daily P&L chart, win rate, profit factor, average win/loss, and a trade log grouped by CME trading day (6 PM–5 PM New York time)
-- **Lucid Portal tab.** Lucid's own web dashboard inside the app. You sign in once and the login is kept. You set the address in Settings.
-- **Import.** Bring trades in from a CSV export, such as Tradovate's *Reports → Performance → Download CSV*. Generic CSVs with Date / Symbol / Qty / P&L / Fees columns work too, and duplicates are skipped. You can also add trades by hand.
+- **Lucid tab.** Lucid's own web dashboard inside the app. You sign in once and the login is kept. You set the address in Settings. **Read numbers** picks the balance and drawdown figures off the page; you choose which account they belong to, and the account dashboard shows Lucid's numbers next to the app's own calculation.
+- **Tradovate tab.** Tradovate's web trader inside the app. Download a *Reports → Performance* CSV there and the app catches the file and asks which account to add it to, with no Files app needed.
+- **Other imports.** Share or "Open in" a CSV from another app, or import one from Files. Tradovate's Performance export works, and so do generic CSVs with Date / Symbol / Qty / P&L / Fees columns. Duplicates are skipped. You can also add trades by hand.
 
 Lucid doesn't publish a public API. So the native dashboard works from the trades you import, and the Portal tab shows the live official numbers.
 

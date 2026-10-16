@@ -6,6 +6,8 @@ import LucidCore
 final class AccountStore: ObservableObject {
     @Published private(set) var accounts: [TradingAccount] = []
     @Published var lastError: String?
+    /// A CSV waiting for the user to choose an account (from Tradovate or the share sheet).
+    @Published var pendingImport: PendingImport?
 
     private let fileURL: URL
 
@@ -69,6 +71,12 @@ final class AccountStore: ObservableObject {
     func deleteTrades(ids: Set<UUID>, from accountID: UUID) {
         guard var account = account(id: accountID) else { return }
         account.trades.removeAll { ids.contains($0.id) }
+        upsert(account)
+    }
+
+    func setReported(_ figures: ReportedFigures, for accountID: UUID) {
+        guard var account = account(id: accountID) else { return }
+        account.reported = figures
         upsert(account)
     }
 

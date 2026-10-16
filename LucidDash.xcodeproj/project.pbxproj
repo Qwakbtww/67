@@ -16,9 +16,12 @@
 		834BFB9116C5C1BDCFF8CBC6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507FF2615FB6A1DB3BCFB4B /* AppSettings.swift */; };
 		8C9C073CF04EEEA74CC75856 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */; };
 		976DF70C5E1F575019CC7398 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FB83FE82A312EBB5FFDF4A /* Formatting.swift */; };
+		9B9C281A36ED18CE8985F149 /* BrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936498A1DB16C4F26ED6B03F /* BrowserView.swift */; };
+		A0032ADF7538045C399B1F68 /* TradovateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5352C169E8182726357CE2 /* TradovateView.swift */; };
 		AA380628EB5DA5AFA6F669E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 223774C08D52F6485D5F59D9 /* Assets.xcassets */; };
 		B605487B1A7DECE0BDF2EC31 /* TradesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEAA541BC173E92EDF61184 /* TradesListView.swift */; };
 		C042931F101B13275DF50660 /* LucidCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6951C4161D4373E7A9D3BD6D /* LucidCore */; };
+		DB244691F45E0C367E40FFF8 /* ImportTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420A712B7D5FAC83738B7184 /* ImportTargetView.swift */; };
 		E82A833D7F282D65921E4399 /* AccountEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC24F55788666E836DFD0E1 /* AccountEditorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,11 +32,14 @@
 		21208C977E502C6424601C49 /* LucidDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidDashApp.swift; sourceTree = "<group>"; };
 		223774C08D52F6485D5F59D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		288CAE0606D1913AE7FCA5A1 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
+		420A712B7D5FAC83738B7184 /* ImportTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportTargetView.swift; sourceTree = "<group>"; };
 		83488DF6F5CBA58A65881C0B /* PortalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalView.swift; sourceTree = "<group>"; };
 		8B79CF4096DCB7D9ED632898 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		936498A1DB16C4F26ED6B03F /* BrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserView.swift; sourceTree = "<group>"; };
 		A2C18C7DCF9B1CFB55357048 /* AccountDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDashboardView.swift; sourceTree = "<group>"; };
 		C507FF2615FB6A1DB3BCFB4B /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		D03CA19DA346259D37A9A0D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DF5352C169E8182726357CE2 /* TradovateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradovateView.swift; sourceTree = "<group>"; };
 		EF5630296C0E394B592AA4A0 /* AddTradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradeView.swift; sourceTree = "<group>"; };
 		EFEAA541BC173E92EDF61184 /* TradesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesListView.swift; sourceTree = "<group>"; };
 		F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
@@ -101,10 +107,13 @@
 				0EC24F55788666E836DFD0E1 /* AccountEditorView.swift */,
 				F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */,
 				EF5630296C0E394B592AA4A0 /* AddTradeView.swift */,
+				936498A1DB16C4F26ED6B03F /* BrowserView.swift */,
 				10FB83FE82A312EBB5FFDF4A /* Formatting.swift */,
+				420A712B7D5FAC83738B7184 /* ImportTargetView.swift */,
 				83488DF6F5CBA58A65881C0B /* PortalView.swift */,
 				D03CA19DA346259D37A9A0D2 /* SettingsView.swift */,
 				EFEAA541BC173E92EDF61184 /* TradesListView.swift */,
+				DF5352C169E8182726357CE2 /* TradovateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -208,11 +217,14 @@
 				8C9C073CF04EEEA74CC75856 /* AccountsListView.swift in Sources */,
 				12A1BA695A6578438B355206 /* AddTradeView.swift in Sources */,
 				834BFB9116C5C1BDCFF8CBC6 /* AppSettings.swift in Sources */,
+				9B9C281A36ED18CE8985F149 /* BrowserView.swift in Sources */,
 				976DF70C5E1F575019CC7398 /* Formatting.swift in Sources */,
+				DB244691F45E0C367E40FFF8 /* ImportTargetView.swift in Sources */,
 				491AE7FB588DBAED1389AE9E /* LucidDashApp.swift in Sources */,
 				5572C211F2226DEFBFE67BF1 /* PortalView.swift in Sources */,
 				5653EEE872D4F9B1BFA122E2 /* SettingsView.swift in Sources */,
 				B605487B1A7DECE0BDF2EC31 /* TradesListView.swift in Sources */,
+				A0032ADF7538045C399B1F68 /* TradovateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
