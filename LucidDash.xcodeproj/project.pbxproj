@@ -1,0 +1,421 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		12A1BA695A6578438B355206 /* AddTradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5630296C0E394B592AA4A0 /* AddTradeView.swift */; };
+		28C4E4AAB6991C192BE9C4F8 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 288CAE0606D1913AE7FCA5A1 /* AccountStore.swift */; };
+		491AE7FB588DBAED1389AE9E /* LucidDashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21208C977E502C6424601C49 /* LucidDashApp.swift */; };
+		509A2FBE6626C1BC4FF00098 /* AccountDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C18C7DCF9B1CFB55357048 /* AccountDashboardView.swift */; };
+		5572C211F2226DEFBFE67BF1 /* PortalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83488DF6F5CBA58A65881C0B /* PortalView.swift */; };
+		5653EEE872D4F9B1BFA122E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03CA19DA346259D37A9A0D2 /* SettingsView.swift */; };
+		834BFB9116C5C1BDCFF8CBC6 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C507FF2615FB6A1DB3BCFB4B /* AppSettings.swift */; };
+		8C9C073CF04EEEA74CC75856 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */; };
+		976DF70C5E1F575019CC7398 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FB83FE82A312EBB5FFDF4A /* Formatting.swift */; };
+		AA380628EB5DA5AFA6F669E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 223774C08D52F6485D5F59D9 /* Assets.xcassets */; };
+		B605487B1A7DECE0BDF2EC31 /* TradesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEAA541BC173E92EDF61184 /* TradesListView.swift */; };
+		C042931F101B13275DF50660 /* LucidCore in Frameworks */ = {isa = PBXBuildFile; productRef = 6951C4161D4373E7A9D3BD6D /* LucidCore */; };
+		E82A833D7F282D65921E4399 /* AccountEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC24F55788666E836DFD0E1 /* AccountEditorView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0EC24F55788666E836DFD0E1 /* AccountEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditorView.swift; sourceTree = "<group>"; };
+		0F6433D4DB603D2A60086578 /* LucidDash.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LucidDash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10FB83FE82A312EBB5FFDF4A /* Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatting.swift; sourceTree = "<group>"; };
+		21208C977E502C6424601C49 /* LucidDashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LucidDashApp.swift; sourceTree = "<group>"; };
+		223774C08D52F6485D5F59D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		288CAE0606D1913AE7FCA5A1 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
+		83488DF6F5CBA58A65881C0B /* PortalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalView.swift; sourceTree = "<group>"; };
+		8B79CF4096DCB7D9ED632898 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A2C18C7DCF9B1CFB55357048 /* AccountDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDashboardView.swift; sourceTree = "<group>"; };
+		C507FF2615FB6A1DB3BCFB4B /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		D03CA19DA346259D37A9A0D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EF5630296C0E394B592AA4A0 /* AddTradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradeView.swift; sourceTree = "<group>"; };
+		EFEAA541BC173E92EDF61184 /* TradesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesListView.swift; sourceTree = "<group>"; };
+		F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
+		FC6A68DDC5A3CD56A7CC109C /* LucidCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LucidCore; path = Packages/LucidCore; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		849EA87EA376DDF481673A89 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C042931F101B13275DF50660 /* LucidCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1AB8BFA337C90F495F26FFB4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				21208C977E502C6424601C49 /* LucidDashApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1DF7B2C73D812156B1389846 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				223774C08D52F6485D5F59D9 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		252D64E1CDEEAE1042C50287 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0F6433D4DB603D2A60086578 /* LucidDash.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2EC9C5C36E2D9D089A6EC1CC = {
+			isa = PBXGroup;
+			children = (
+				4D0023EBC9B769FF543C568C /* LucidDash */,
+				4BC601517DB28F2065709DDA /* Packages */,
+				252D64E1CDEEAE1042C50287 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2FD0A633250B9F025A0CECB3 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				288CAE0606D1913AE7FCA5A1 /* AccountStore.swift */,
+				C507FF2615FB6A1DB3BCFB4B /* AppSettings.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		3242A57492484767615ED9BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A2C18C7DCF9B1CFB55357048 /* AccountDashboardView.swift */,
+				0EC24F55788666E836DFD0E1 /* AccountEditorView.swift */,
+				F3BE94EFBA8624BFFA118D0D /* AccountsListView.swift */,
+				EF5630296C0E394B592AA4A0 /* AddTradeView.swift */,
+				10FB83FE82A312EBB5FFDF4A /* Formatting.swift */,
+				83488DF6F5CBA58A65881C0B /* PortalView.swift */,
+				D03CA19DA346259D37A9A0D2 /* SettingsView.swift */,
+				EFEAA541BC173E92EDF61184 /* TradesListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4BC601517DB28F2065709DDA /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				FC6A68DDC5A3CD56A7CC109C /* LucidCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		4D0023EBC9B769FF543C568C /* LucidDash */ = {
+			isa = PBXGroup;
+			children = (
+				8B79CF4096DCB7D9ED632898 /* Info.plist */,
+				1AB8BFA337C90F495F26FFB4 /* App */,
+				1DF7B2C73D812156B1389846 /* Resources */,
+				2FD0A633250B9F025A0CECB3 /* Store */,
+				3242A57492484767615ED9BF /* Views */,
+			);
+			path = LucidDash;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3B39CC2EF2116D7245E18FFE /* LucidDash */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFB0CC6D84B004DBBEACDE78 /* Build configuration list for PBXNativeTarget "LucidDash" */;
+			buildPhases = (
+				FEA20BAD3E5DED13ABAFC3A2 /* Sources */,
+				5AA2477C42F4972312B9B2B1 /* Resources */,
+				849EA87EA376DDF481673A89 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LucidDash;
+			packageProductDependencies = (
+				6951C4161D4373E7A9D3BD6D /* LucidCore */,
+			);
+			productName = LucidDash;
+			productReference = 0F6433D4DB603D2A60086578 /* LucidDash.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F2EDDD91401F2046DB6C75EC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3B39CC2EF2116D7245E18FFE = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = E537B06B0A7001480DB75502 /* Build configuration list for PBXProject "LucidDash" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2EC9C5C36E2D9D089A6EC1CC;
+			packageReferences = (
+				F0C7BC1D29074A62FD8DD08F /* XCLocalSwiftPackageReference "Packages/LucidCore" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3B39CC2EF2116D7245E18FFE /* LucidDash */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5AA2477C42F4972312B9B2B1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA380628EB5DA5AFA6F669E6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FEA20BAD3E5DED13ABAFC3A2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				509A2FBE6626C1BC4FF00098 /* AccountDashboardView.swift in Sources */,
+				E82A833D7F282D65921E4399 /* AccountEditorView.swift in Sources */,
+				28C4E4AAB6991C192BE9C4F8 /* AccountStore.swift in Sources */,
+				8C9C073CF04EEEA74CC75856 /* AccountsListView.swift in Sources */,
+				12A1BA695A6578438B355206 /* AddTradeView.swift in Sources */,
+				834BFB9116C5C1BDCFF8CBC6 /* AppSettings.swift in Sources */,
+				976DF70C5E1F575019CC7398 /* Formatting.swift in Sources */,
+				491AE7FB588DBAED1389AE9E /* LucidDashApp.swift in Sources */,
+				5572C211F2226DEFBFE67BF1 /* PortalView.swift in Sources */,
+				5653EEE872D4F9B1BFA122E2 /* SettingsView.swift in Sources */,
+				B605487B1A7DECE0BDF2EC31 /* TradesListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3ED059551198A2032908FCF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LucidDash/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.LucidDash;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3F108443669B56928CBA1035 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A9FB85CA1C394E5BA4327D3F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EDFD0E1768A1940372011096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LucidDash/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.LucidDash;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BFB0CC6D84B004DBBEACDE78 /* Build configuration list for PBXNativeTarget "LucidDash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDFD0E1768A1940372011096 /* Debug */,
+				3ED059551198A2032908FCF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E537B06B0A7001480DB75502 /* Build configuration list for PBXProject "LucidDash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F108443669B56928CBA1035 /* Debug */,
+				A9FB85CA1C394E5BA4327D3F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F0C7BC1D29074A62FD8DD08F /* XCLocalSwiftPackageReference "Packages/LucidCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/LucidCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6951C4161D4373E7A9D3BD6D /* LucidCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LucidCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F2EDDD91401F2046DB6C75EC /* Project object */;
+}
