@@ -5,3 +5,6 @@ DerivedData/
 .build/
 .swiftpm/
 Packages/LucidCore/.build/
+*.ipa
+Payload/
+build/
