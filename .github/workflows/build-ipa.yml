@@ -1,0 +1,68 @@
+name: Build unsigned IPA
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Test LucidCore
+        working-directory: Packages/LucidCore
+        run: swift test
+
+      - name: Build app (no code signing)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project LucidDash.xcodeproj \
+            -scheme LucidDash \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build | tee xcodebuild.log | grep -E "error:|warning: .*LucidDash|BUILD (SUCCEEDED|FAILED)" || true
+          test -d build/Build/Products/Release-iphoneos/LucidDash.app
+
+      - name: Package IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/LucidDash.app Payload/
+          zip -qry LucidDash-unsigned.ipa Payload
+          ls -lh LucidDash-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LucidDash-unsigned-ipa
+          path: LucidDash-unsigned.ipa
+
+      - name: Publish to a GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="build-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" LucidDash-unsigned.ipa \
+            --target "$GITHUB_SHA" \
+            --title "LucidDash build ${GITHUB_RUN_NUMBER} (unsigned)" \
+            --notes "Unsigned IPA built from ${GITHUB_SHA::7} on ${GITHUB_REF_NAME}. Sign it with your own certificate before installing." \
+            --prerelease
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcodebuild-log
+          path: xcodebuild.log
